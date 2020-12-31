@@ -76,10 +76,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
                 }
             }
-            g.setColor(new Color(255, 154, 162));
-            g.setFont(new Font("AvenirNext",Font.PLAIN,40));
-            FontMetrics fontMetrics = getFontMetrics(g.getFont());
-            g.drawString("Score "+ applesEaten, (SCREEN_WIDTH-fontMetrics.stringWidth("Score " + applesEaten))/2,g.getFont().getSize());
+            drawScore(g);
         }
         else{
             gameOver(g);
@@ -143,13 +140,15 @@ public class GamePanel extends JPanel implements ActionListener{
         }
     }
 
-
-
-    public void gameOver(Graphics g){
+    public void drawScore(Graphics g){
         g.setColor(new Color(255, 154, 162));
         g.setFont(new Font("AvenirNext",Font.PLAIN,40));
         FontMetrics fontMetrics1 = getFontMetrics(g.getFont());
         g.drawString("Score "+ applesEaten, (SCREEN_WIDTH-fontMetrics1.stringWidth("Score " + applesEaten))/2,g.getFont().getSize());
+    }
+
+    public void gameOver(Graphics g){
+        drawScore(g);
 
         g.setColor(new Color(255, 154, 162));
         g.setFont(new Font("AvenirNext",Font.BOLD,75));
@@ -171,27 +170,17 @@ public class GamePanel extends JPanel implements ActionListener{
     public class MyKeyAdapter extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e){
-            switch (e.getKeyCode()){
-                case KeyEvent.VK_RIGHT:
-                    if (direction!='L'){
-                        direction = 'R';
-                    }break;
+            int keyCode = e.getKeyCode();
 
-                case KeyEvent.VK_LEFT:
-                    if (direction!='R'){
-                        direction = 'L';
-                    }break;
-
-                case KeyEvent.VK_UP:
-                    if (direction!='D'){
-                        direction = 'U';
-                    }break;
-
-                case KeyEvent.VK_DOWN:
-                    if (direction!='U'){
-                        direction = 'D';
-                    }break;
+            if (keyCode==KeyEvent.VK_RIGHT && direction!='L')
+                direction = 'R';
+            else if (keyCode==KeyEvent.VK_LEFT && direction!='R')
+                direction = 'L';
+            else if (keyCode==KeyEvent.VK_DOWN && direction!='U')
+                direction = 'D';
+            else if (keyCode==KeyEvent.VK_UP && direction!='D')
+                direction = 'U';
             }
         }
     }
-}
+
